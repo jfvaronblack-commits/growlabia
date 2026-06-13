@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Growlab — AI · Retail Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --orange:#F26A2E;
+  --orange-dark:#C44E18;
+  --orange-light:#FFF0E8;
+  --black:#111111;
+  --off-white:#F5F5F0;
+  --gray:#888880;
+  --border:#2A2A2A;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Space Grotesk',sans-serif;background:#111111;color:#F5F5F0;line-height:1.6}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 5%;display:flex;justify-content:space-between;align-items:center;background:rgba(17,17,17,0.92);backdrop-filter:blur(8px);border-bottom:0.5px solid #1E1E1E}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+.nav-logo-text{font-size:18px;font-weight:700;color:#F5F5F0;letter-spacing:-0.3px}
+.nav-logo-text span{color:#F26A2E}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{font-size:13px;color:#888880;text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:#F5F5F0}
+.nav-cta{background:#F26A2E;color:#111111;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:8px 18px;border-radius:20px;text-decoration:none;transition:background .2s}
+.nav-cta:hover{background:#C44E18}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px 5% 80px;position:relative;overflow:hidden}
+.hero-bg-icon{position:absolute;right:-5%;bottom:-10%;opacity:0.03;pointer-events:none}
+.hero-eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#F26A2E;margin-bottom:20px}
+.hero-title{font-size:clamp(36px,6vw,72px);font-weight:700;line-height:1.05;letter-spacing:-1.5px;max-width:800px;margin-bottom:24px}
+.hero-title span{color:#F26A2E}
+.hero-sub{font-size:18px;color:#888880;line-height:1.6;max-width:520px;margin-bottom:40px}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+.btn-primary{background:#F26A2E;color:#111111;font-size:14px;font-weight:700;letter-spacing:0.5px;padding:14px 28px;border-radius:30px;text-decoration:none;transition:background .2s;border:none;cursor:pointer}
+.btn-primary:hover{background:#C44E18}
+.btn-ghost{color:#F5F5F0;font-size:14px;font-weight:500;padding:14px 28px;border-radius:30px;text-decoration:none;border:0.5px solid #333330;transition:border-color .2s}
+.btn-ghost:hover{border-color:#F26A2E;color:#F26A2E}
+.hero-stat-row{display:flex;gap:40px;margin-top:60px;padding-top:40px;border-top:0.5px solid #1E1E1E;flex-wrap:wrap}
+.hero-stat{display:flex;flex-direction:column;gap:4px}
+.hero-stat-num{font-size:28px;font-weight:700;color:#F26A2E;letter-spacing:-0.5px}
+.hero-stat-label{font-size:12px;color:#555550}
+
+/* SECTIONS */
+section{padding:80px 5%}
+.section-eyebrow{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#F26A2E;margin-bottom:12px}
+.section-title{font-size:clamp(24px,4vw,40px);font-weight:700;letter-spacing:-0.5px;margin-bottom:16px}
+.section-sub{font-size:16px;color:#888880;line-height:1.65;max-width:560px;margin-bottom:48px}
+
+/* CÓMO FUNCIONA */
+.how-section{background:#111111;border-top:0.5px solid #1E1E1E}
+.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.step-card{background:#1A1A1A;border-radius:12px;padding:28px;border:0.5px solid #222222;position:relative;overflow:hidden}
+.step-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:#F26A2E}
+.step-num{font-size:40px;font-weight:700;color:#F26A2E;opacity:0.15;line-height:1;margin-bottom:16px}
+.step-title{font-size:16px;font-weight:600;color:#F5F5F0;margin-bottom:8px}
+.step-desc{font-size:13px;color:#888880;line-height:1.6}
+
+/* DEMO CHAT */
+.demo-section{background:#0D0D0D;border-top:0.5px solid #1E1E1E}
+.demo-wrap{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.demo-left{}
+.demo-chat{background:#1A1A1A;border-radius:16px;border:0.5px solid #222222;overflow:hidden;max-width:380px}
+.chat-header{background:#111111;padding:14px 18px;display:flex;align-items:center;gap:10px;border-bottom:0.5px solid #222222}
+.chat-avatar{width:32px;height:32px;border-radius:50%;background:#F26A2E;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#111111;flex-shrink:0}
+.chat-name{font-size:13px;font-weight:600;color:#F5F5F0}
+.chat-status{font-size:11px;color:#2ECC8A}
+.chat-messages{padding:16px;display:flex;flex-direction:column;gap:12px;min-height:280px}
+.msg{max-width:80%;padding:10px 14px;border-radius:12px;font-size:13px;line-height:1.5}
+.msg-in{background:#222222;color:#C8C8C0;border-radius:12px 12px 12px 2px;align-self:flex-start}
+.msg-out{background:#F26A2E;color:#111111;font-weight:500;border-radius:12px 12px 2px 12px;align-self:flex-end}
+.msg-time{font-size:10px;opacity:0.5;margin-top:3px}
+.chat-input{padding:12px 16px;border-top:0.5px solid #222222;display:flex;gap:8px;align-items:center}
+.chat-input input{flex:1;background:#222222;border:none;border-radius:20px;padding:8px 14px;font-size:12px;color:#F5F5F0;font-family:'Space Grotesk',sans-serif;outline:none}
+.chat-input input::placeholder{color:#555550}
+.chat-send{background:#F26A2E;border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.demo-right{display:flex;flex-direction:column;gap:20px}
+.demo-feature{display:flex;gap:14px;align-items:flex-start}
+.demo-feature-icon{width:36px;height:36px;border-radius:8px;background:#1A1A1A;border:0.5px solid #222222;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px}
+.demo-feature-title{font-size:14px;font-weight:600;color:#F5F5F0;margin-bottom:4px}
+.demo-feature-desc{font-size:12px;color:#888880;line-height:1.5}
+
+/* PARA QUIÉN */
+.for-section{background:#111111;border-top:0.5px solid #1E1E1E}
+.for-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.for-card{background:#1A1A1A;border-radius:12px;padding:24px;border:0.5px solid #222222}
+.for-card.featured{border-color:#F26A2E}
+.for-tag{display:inline-block;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:4px;margin-bottom:12px;background:#111111;color:#F26A2E}
+.for-tag.light{background:#FFF0E8;color:#C44E18}
+.for-title{font-size:15px;font-weight:600;color:#F5F5F0;margin-bottom:8px}
+.for-desc{font-size:13px;color:#888880;line-height:1.55}
+
+/* PRECIOS */
+.pricing-section{background:#0D0D0D;border-top:0.5px solid #1E1E1E}
+.pricing-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:720px}
+.price-card{background:#1A1A1A;border-radius:16px;padding:32px;border:0.5px solid #222222}
+.price-card.featured{border-color:#F26A2E;position:relative}
+.price-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#F26A2E;color:#111111;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 14px;border-radius:20px;white-space:nowrap}
+.price-plan{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#F26A2E;margin-bottom:8px}
+.price-amount{font-size:36px;font-weight:700;color:#F5F5F0;letter-spacing:-1px;margin-bottom:4px}
+.price-amount span{font-size:14px;font-weight:400;color:#888880}
+.price-setup{font-size:12px;color:#555550;margin-bottom:24px}
+.price-features{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.price-feat{display:flex;gap:8px;font-size:13px;color:#C8C8C0}
+.price-feat::before{content:'✓';color:#F26A2E;font-weight:700;flex-shrink:0}
+.btn-price{display:block;text-align:center;padding:12px;border-radius:30px;font-size:13px;font-weight:700;text-decoration:none;transition:all .2s}
+.btn-price-primary{background:#F26A2E;color:#111111}
+.btn-price-primary:hover{background:#C44E18}
+.btn-price-ghost{border:0.5px solid #333330;color:#F5F5F0}
+.btn-price-ghost:hover{border-color:#F26A2E;color:#F26A2E}
+
+/* PRUEBA SOCIAL */
+.proof-section{background:#111111;border-top:0.5px solid #1E1E1E}
+.proof-card{background:#1A1A1A;border-radius:12px;padding:28px;border-left:3px solid #F26A2E;max-width:600px}
+.proof-text{font-size:16px;color:#C8C8C0;line-height:1.65;font-style:italic;margin-bottom:16px}
+.proof-text strong{color:#F26A2E;font-style:normal}
+.proof-author{font-size:13px;color:#888880}
+.proof-author strong{color:#F5F5F0}
+
+/* FORMULARIO */
+.contact-section{background:#0D0D0D;border-top:0.5px solid #1E1E1E}
+.contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+.contact-form{display:flex;flex-direction:column;gap:16px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-label{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#888880}
+.form-input{background:#1A1A1A;border:0.5px solid #2A2A2A;border-radius:8px;padding:12px 16px;font-size:14px;color:#F5F5F0;font-family:'Space Grotesk',sans-serif;outline:none;transition:border-color .2s}
+.form-input:focus{border-color:#F26A2E}
+.form-input::placeholder{color:#444440}
+.form-select{background:#1A1A1A;border:0.5px solid #2A2A2A;border-radius:8px;padding:12px 16px;font-size:14px;color:#F5F5F0;font-family:'Space Grotesk',sans-serif;outline:none;transition:border-color .2s;appearance:none}
+.form-select:focus{border-color:#F26A2E}
+.form-submit{background:#F26A2E;color:#111111;font-size:14px;font-weight:700;letter-spacing:0.5px;padding:14px;border-radius:30px;border:none;cursor:pointer;transition:background .2s;font-family:'Space Grotesk',sans-serif}
+.form-submit:hover{background:#C44E18}
+.form-success{display:none;background:#1A1A1A;border:0.5px solid #F26A2E;border-radius:8px;padding:20px;text-align:center;font-size:14px;color:#F26A2E}
+.contact-info{display:flex;flex-direction:column;gap:24px}
+.contact-item{display:flex;flex-direction:column;gap:4px}
+.contact-item-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#555550}
+.contact-item-value{font-size:15px;color:#F5F5F0}
+.contact-item-value a{color:#F26A2E;text-decoration:none}
+
+/* FOOTER */
+footer{background:#111111;border-top:0.5px solid #1E1E1E;padding:40px 5%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.footer-logo{font-size:16px;font-weight:700;color:#F5F5F0}
+.footer-logo span{color:#F26A2E}
+.footer-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#333330}
+.footer-copy{font-size:12px;color:#333330}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .steps-grid{grid-template-columns:1fr}
+  .demo-wrap{grid-template-columns:1fr}
+  .for-grid{grid-template-columns:1fr}
+  .pricing-grid{grid-template-columns:1fr}
+  .contact-wrap{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .hero-stat-row{gap:24px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <svg width="22" height="22" viewBox="0 0 32 32" fill="none">
+      <rect x="2" y="20" width="5" height="10" rx="1.5" fill="#F26A2E" opacity="0.35"/>
+      <rect x="9" y="15" width="5" height="15" rx="1.5" fill="#F26A2E" opacity="0.55"/>
+      <rect x="16" y="9" width="5" height="21" rx="1.5" fill="#F26A2E" opacity="0.75"/>
+      <rect x="23" y="3" width="5" height="27" rx="1.5" fill="#F26A2E"/>
+      <path d="M4 18 Q13 10 25 4" stroke="#F26A2E" stroke-width="1" fill="none" stroke-linecap="round" stroke-dasharray="1.5 2" opacity="0.5"/>
+      <circle cx="25" cy="4" r="2.5" fill="#F26A2E"/>
+    </svg>
+    <div>
+      <div class="nav-logo-text">Grow<span>lab</span></div>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="#como-funciona">Cómo funciona</a>
+    <a href="#demo">Demo</a>
+    <a href="#precios">Precios</a>
+    <a href="#contacto" class="nav-cta">Pide tu demo</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <svg class="hero-bg-icon" width="600" height="600" viewBox="0 0 32 32" fill="none">
+    <rect x="2" y="20" width="5" height="10" rx="1.5" fill="#F26A2E"/>
+    <rect x="9" y="15" width="5" height="15" rx="1.5" fill="#F26A2E"/>
+    <rect x="16" y="9" width="5" height="21" rx="1.5" fill="#F26A2E"/>
+    <rect x="23" y="3" width="5" height="27" rx="1.5" fill="#F26A2E"/>
+  </svg>
+  <div class="hero-eyebrow">Agente IA para tu tienda</div>
+  <h1 class="hero-title">Tu tienda atiende<br>cuando tú <span>no estás</span></h1>
+  <p class="hero-sub">Leo es el agente de inteligencia artificial que responde a tus clientes por WhatsApp las 24 horas. Sin contratar a nadie. Sin cambiar nada.</p>
+  <div class="hero-actions">
+    <a href="#contacto" class="btn-primary">Pide tu demo gratuita</a>
+    <a href="#demo" class="btn-ghost">Ver cómo funciona</a>
+  </div>
+  <div class="hero-stat-row">
+    <div class="hero-stat">
+      <div class="hero-stat-num">24/7</div>
+      <div class="hero-stat-label">Disponibilidad total</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">&lt;3s</div>
+      <div class="hero-stat-label">Tiempo de respuesta</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">0€</div>
+      <div class="hero-stat-label">Coste por conversación</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">150€</div>
+      <div class="hero-stat-label">Desde al mes</div>
+    </div>
+  </div>
+</section>
+
+<!-- CÓMO FUNCIONA -->
+<section class="how-section" id="como-funciona">
+  <div class="section-eyebrow">Cómo funciona</div>
+  <h2 class="section-title">Tres pasos, cero complicaciones</h2>
+  <p class="section-sub">Leo se integra en tu WhatsApp actual en menos de una semana. Sin apps nuevas, sin formación para tu equipo.</p>
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num">01</div>
+      <div class="step-title">Cliente escribe</div>
+      <div class="step-desc">Un cliente envía un mensaje a tu WhatsApp con una duda sobre un producto, disponibilidad o cultivo.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">02</div>
+      <div class="step-title">Leo responde al instante</div>
+      <div class="step-desc">Leo analiza la pregunta y responde con el conocimiento de tu tienda y del sector. En menos de 3 segundos, a cualquier hora.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">03</div>
+      <div class="step-title">Tú solo intervienes cuando importa</div>
+      <div class="step-desc">Si la consulta requiere tu atención, Leo te avisa directamente. Tú decides cuándo entrar en la conversación.</div>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO -->
+<section class="demo-section" id="demo">
+  <div class="demo-wrap">
+    <div class="demo-left">
+      <div class="section-eyebrow">Demo en vivo</div>
+      <h2 class="section-title">Así responde Leo</h2>
+      <p class="section-sub">Una conversación real de Leo con un cliente de growshop.</p>
+      <div class="demo-chat">
+        <div class="chat-header">
+          <div class="chat-avatar">L</div>
+          <div>
+            <div class="chat-name">Leo · Tu tienda</div>
+            <div class="chat-status">● En línea ahora</div>
+          </div>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+          <div class="msg msg-in">Hola, ¿tenéis substrato específico para autoflowering?<div class="msg-time">14:32</div></div>
+          <div class="msg msg-out">¡Hola! Sí, tenemos varias opciones para autoflowering. El más popular es el BioBizz Light Mix, ideal por su textura suelta que favorece el desarrollo radicular rápido que necesitan las autos. También tenemos el Plagron Grow Mix si buscas algo con más nutrientes base. ¿Cuántos litros necesitas?<div class="msg-time">14:32</div></div>
+          <div class="msg msg-in">Para macetas de 11L, unas 5 o 6 macetas<div class="msg-time">14:33</div></div>
+          <div class="msg msg-out">Perfecto. Para 6 macetas de 11L necesitas unos 66L de substrato. Te recomendaría 2 sacos de 50L del BioBizz Light Mix — te sobra un poco por si necesitas rellenar. ¿Quieres que te reserve stock o prefieres pasarte por la tienda?<div class="msg-time">14:33</div></div>
+        </div>
+        <div class="chat-input">
+          <input type="text" placeholder="Escribe un mensaje..." id="demoInput" onkeydown="if(event.key==='Enter')sendDemo()">
+          <button class="chat-send" onclick="sendDemo()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="demo-right">
+      <div class="demo-feature">
+        <div class="demo-feature-icon">⚡</div>
+        <div>
+          <div class="demo-feature-title">Respuesta inmediata</div>
+          <div class="demo-feature-desc">Leo responde en menos de 3 segundos, sin importar la hora ni el día.</div>
+        </div>
+      </div>
+      <div class="demo-feature">
+        <div class="demo-feature-icon">🧠</div>
+        <div>
+          <div class="demo-feature-title">Conocimiento del sector</div>
+          <div class="demo-feature-desc">Entrenado específicamente para grow y CBD. Habla el idioma de tus clientes.</div>
+        </div>
+      </div>
+      <div class="demo-feature">
+        <div class="demo-feature-icon">🔔</div>
+        <div>
+          <div class="demo-feature-title">Escala cuando toca</div>
+          <div class="demo-feature-desc">Si la consulta lo requiere, te avisa a ti directamente. Tú siempre tienes el control.</div>
+        </div>
+      </div>
+      <div class="demo-feature">
+        <div class="demo-feature-icon">📱</div>
+        <div>
+          <div class="demo-feature-title">Sin cambiar nada</div>
+          <div class="demo-feature-desc">Funciona sobre tu WhatsApp actual. Sin apps nuevas, sin formación.</div>
+        </div>
+      </div>
+      <div class="demo-feature">
+        <div class="demo-feature-icon">📊</div>
+        <div>
+          <div class="demo-feature-title">Memoria de clientes</div>
+          <div class="demo-feature-desc">Leo recuerda a cada cliente y el historial de sus conversaciones.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARA QUIÉN -->
+<section class="for-section">
+  <div class="section-eyebrow">Para quién es Leo</div>
+  <h2 class="section-title">Retail especializado que no puede permitirse perder un cliente</h2>
+  <p class="section-sub">Leo está diseñado para tiendas con volumen de consultas alto y poco tiempo para atenderlas todas.</p>
+  <div class="for-grid">
+    <div class="for-card featured">
+      <div class="for-tag">Growshops</div>
+      <div class="for-title">Tiendas de cultivo</div>
+      <div class="for-desc">Clientes que preguntan sobre substratos, nutrientes, iluminación y fitosanitarios. Leo conoce el producto y responde con precisión.</div>
+    </div>
+    <div class="for-card">
+      <div class="for-tag light">Tiendas CBD</div>
+      <div class="for-title">Comercios de CBD y cáñamo</div>
+      <div class="for-desc">Consultas sobre variedades, efectos, dosificación y legalidad. Leo responde con rigor dentro del marco legal español.</div>
+    </div>
+    <div class="for-card">
+      <div class="for-tag light">Semilleros</div>
+      <div class="for-title">Bancos de semillas</div>
+      <div class="for-desc">Dudas técnicas sobre genética, tiempos de floración, THC/CBD y compatibilidad. Leo gestiona el catálogo con detalle.</div>
+    </div>
+    <div class="for-card">
+      <div class="for-tag light">Próximamente</div>
+      <div class="for-title">Otros nichos especializados</div>
+      <div class="for-desc">Growlab está expandiendo Leo a otros sectores de retail especializado. Contacta si tu tienda no está en esta lista.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRECIOS -->
+<section class="pricing-section" id="precios">
+  <div class="section-eyebrow">Precios</div>
+  <h2 class="section-title">Sin letra pequeña</h2>
+  <p class="section-sub">Dos planes, precio fijo mensual. Sin permanencia, sin coste por conversación.</p>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-plan">Base</div>
+      <div class="price-amount">150€ <span>/ mes</span></div>
+      <div class="price-setup">+ 350€ configuración inicial</div>
+      <div class="price-features">
+        <div class="price-feat">Agente Leo en tu WhatsApp</div>
+        <div class="price-feat">Conversaciones ilimitadas</div>
+        <div class="price-feat">Memoria de clientes</div>
+        <div class="price-feat">Escalado al dueño</div>
+        <div class="price-feat">Soporte por email</div>
+      </div>
+      <a href="#contacto" class="btn-price btn-price-ghost">Empezar con Base</a>
+    </div>
+    <div class="price-card featured">
+      <div class="price-badge">Más popular</div>
+      <div class="price-plan">Pro</div>
+      <div class="price-amount">250€ <span>/ mes</span></div>
+      <div class="price-setup">+ 500€ configuración inicial</div>
+      <div class="price-features">
+        <div class="price-feat">Todo lo del plan Base</div>
+        <div class="price-feat">Seguimiento proactivo de clientes</div>
+        <div class="price-feat">Analítica mensual de conversaciones</div>
+        <div class="price-feat">Personalización avanzada de Leo</div>
+        <div class="price-feat">Soporte prioritario por WhatsApp</div>
+      </div>
+      <a href="#contacto" class="btn-price btn-price-primary">Empezar con Pro</a>
+    </div>
+  </div>
+</section>
+
+<!-- PRUEBA SOCIAL -->
+<section class="proof-section">
+  <div class="section-eyebrow">Resultados reales</div>
+  <h2 class="section-title">Lo que dicen los primeros pilotos</h2>
+  <div class="proof-card">
+    <div class="proof-text">"Primer mes con Leo: <strong>+40% de consultas atendidas fuera de horario</strong> sin tocar el teléfono. Mis clientes reciben respuesta a las 2 de la madrugada y yo me entero por la mañana."</div>
+    <div class="proof-author"><strong>Cliente piloto</strong> · Growshop Granada</div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section class="contact-section" id="contacto">
+  <div class="contact-wrap">
+    <div>
+      <div class="section-eyebrow">Contacto</div>
+      <h2 class="section-title">Pide tu demo gratuita</h2>
+      <p class="section-sub">Sin compromiso. En 10 minutos ves a Leo respondiendo en tu propio WhatsApp.</p>
+      <div class="contact-form">
+        <div class="form-group">
+          <label class="form-label">Tu nombre</label>
+          <input class="form-input" type="text" placeholder="Nombre y apellidos" id="fname">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nombre de tu tienda</label>
+          <input class="form-input" type="text" placeholder="Nombre comercial" id="fstore">
+        </div>
+        <div class="form-group">
+          <label class="form-label">WhatsApp de contacto</label>
+          <input class="form-input" type="tel" placeholder="+34 600 000 000" id="fphone">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tipo de tienda</label>
+          <select class="form-select form-input" id="ftype">
+            <option value="">Selecciona...</option>
+            <option>Growshop</option>
+            <option>Tienda CBD</option>
+            <option>Banco de semillas</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <button class="form-submit" onclick="submitForm()">Quiero mi demo gratuita</button>
+        <div class="form-success" id="formSuccess">¡Recibido! Juanfra te contactará en menos de 24 horas para agendar tu demo.</div>
+      </div>
+    </div>
+    <div class="contact-info">
+      <div class="contact-item">
+        <div class="contact-item-label">Web</div>
+        <div class="contact-item-value">growlabia.io</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-label">Email</div>
+        <div class="contact-item-value"><a href="mailto:juanfra@growlabia.io">juanfra@growlabia.io</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-label">Fundador</div>
+        <div class="contact-item-value">Juanfra Fernández</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-label">Ciudad</div>
+        <div class="contact-item-value">Granada, España</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-label">Producto</div>
+        <div class="contact-item-value">Leo — Agente IA WhatsApp</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">Grow<span>lab</span></div>
+    <div class="footer-tag">AI · Retail Intelligence</div>
+  </div>
+  <div class="footer-copy">© 2026 Growlab · growlabia.io</div>
+</footer>
+
+<script>
+function sendDemo(){
+  const input = document.getElementById('demoInput');
+  const msg = input.value.trim();
+  if(!msg) return;
+  const container = document.getElementById('chatMessages');
+  const userMsg = document.createElement('div');
+  userMsg.className = 'msg msg-in';
+  userMsg.innerHTML = msg + '<div class="msg-time">Ahora</div>';
+  container.appendChild(userMsg);
+  input.value = '';
+  container.scrollTop = container.scrollHeight;
+  setTimeout(()=>{
+    const responses = [
+      'Claro, déjame mirarlo. ¿Buscas algo en concreto o quieres que te recomiende según tu cultivo?',
+      'Perfecto, tenemos stock disponible. ¿Necesitas que te reserve unidades o prefieres pasarte por la tienda?',
+      'Buena pregunta. Depende del estado de la planta — ¿en qué fase de crecimiento estás?',
+      'Sí, esa combinación funciona muy bien. Muchos clientes la usan con buenos resultados.',
+      'Te recomendaría esperar unos días más antes de aplicarlo. ¿Cuántas semanas lleva en floración?'
+    ];
+    const leoMsg = document.createElement('div');
+    leoMsg.className = 'msg msg-out';
+    leoMsg.innerHTML = responses[Math.floor(Math.random()*responses.length)] + '<div class="msg-time">Ahora</div>';
+    container.appendChild(leoMsg);
+    container.scrollTop = container.scrollHeight;
+  }, 900);
+}
+
+function submitForm(){
+  const fname = document.getElementById('fname').value.trim();
+  const fstore = document.getElementById('fstore').value.trim();
+  const fphone = document.getElementById('fphone').value.trim();
+  if(!fname || !fstore || !fphone){
+    alert('Por favor rellena los campos obligatorios.');
+    return;
+  }
+  document.getElementById('formSuccess').style.display = 'block';
+}
+</script>
+</body>
+</html>
