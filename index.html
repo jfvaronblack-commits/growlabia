@@ -420,6 +420,10 @@ footer{background:#111111;border-top:0.5px solid #1E1E1E;padding:40px 5%;display
             <option>Otro</option>
           </select>
         </div>
+        <div class="form-group">
+  <label class="form-label">Email de contacto</label>
+  <input class="form-input" type="email" placeholder="tu@tienda.com" id="femail">
+</div>
         <button class="form-submit" onclick="submitForm()">Quiero mi demo gratuita</button>
         <div class="form-success" id="formSuccess">¡Recibido! Juanfra te contactará en menos de 24 horas para agendar tu demo.</div>
       </div>
@@ -492,6 +496,7 @@ function sendDemo(){
   const fstore = document.getElementById('fstore').value.trim();
   const fphone = document.getElementById('fphone').value.trim();
   const ftype = document.getElementById('ftype').value;
+  const femail = document.getElementById('femail').value.trim();
   
   if(!fname || !fstore || !fphone){
     alert('Por favor rellena los campos obligatorios.');
@@ -506,7 +511,8 @@ function sendDemo(){
         nombre: fname,
         tienda: fstore,
         telefono: fphone,
-        tipo: ftype
+        tipo: ftype,
+        email: femail
       })
     });
     document.getElementById('formSuccess').style.display = 'block';
