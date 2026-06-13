@@ -487,14 +487,32 @@ function sendDemo(){
 }
 
 function submitForm(){
+  async function submitForm(){
   const fname = document.getElementById('fname').value.trim();
   const fstore = document.getElementById('fstore').value.trim();
   const fphone = document.getElementById('fphone').value.trim();
+  const ftype = document.getElementById('ftype').value;
+  
   if(!fname || !fstore || !fphone){
     alert('Por favor rellena los campos obligatorios.');
     return;
   }
-  document.getElementById('formSuccess').style.display = 'block';
+  
+  try {
+    await fetch('https://growgrx.app.n8n.cloud/webhook-test/formulario-landing', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        nombre: fname,
+        tienda: fstore,
+        telefono: fphone,
+        tipo: ftype
+      })
+    });
+    document.getElementById('formSuccess').style.display = 'block';
+  } catch(e) {
+    document.getElementById('formSuccess').style.display = 'block';
+  }
 }
 </script>
 </body>
